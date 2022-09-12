@@ -1,0 +1,42 @@
+ public function Adminregister()
+    {
+      $usermodel =new AdminModel();
+      // $response = [];
+        $validation =\Config\Services::validation();
+        $validate = $this->validate([
+            'name' => 'required',
+            'email'  => 'required|valid_email',
+            'password' => 'required|min_length[3]|max_length[8]',
+        ]);
+        if (!($validate)) {
+            $response = [
+                'status'   => 402,
+                'error'    => $validation->getErrors(),
+                'messages' => null,
+                'data' => null
+            ];
+         }else{
+          $username =$this->request->getVar('name');
+          $email = $this->request->getVar('email');
+          $password = md5($this->request->getVar('password'));
+          $data =[
+            'name' => $username,
+            'email' =>$email,
+            'password' =>$password
+          ];
+          // print_r($data);die();
+          if($usermodel->insert($data))
+          {
+            $response = [
+              'status' => 404,
+              'message'=>"Data is Inserted Successfully"
+            ];
+          }else{
+            $response =[
+              'status' => 404,
+              'message'=>"Failed to Inseted data"
+            ];
+          }
+       }
+       return $this->respond($response);
+    }
