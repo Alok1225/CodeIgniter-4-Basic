@@ -1,0 +1,12 @@
+/*   $url ='http://localhost:8080/blip/AdminController/Adminlogin';
+           $ch =curl_init($url);
+           $data = [
+           'email'=>$this->request->getPost('email'),  
+            'password'=>$this->request->getPost('password')
+            ];
+            curl_setopt($ch, CURLOPT_POST ,true);
+            curl_setopt($ch, CURLOPT_POSTFIELDS ,$data);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+             $response = curl_exec($ch);
+             $responseArray = json_decode($response,true);
+             print_r($response);die(); 
